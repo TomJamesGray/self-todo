@@ -26,6 +26,15 @@ class Client():
         #Last arg (0) is to say this item hasn't been completed
         self.api.saveListItem(listId,itemContents,0)
 
+    #Print all the lists in the db
+    def listLists(self):
+        try:
+            listNames = self.api.getLists('listName')
+        except ValueError as e:
+            print(e)
+            return False
 
-        
+        for i in range(0,len(listNames)):
+            print("{}: {}".format(i,listNames[i][0]))
+
 

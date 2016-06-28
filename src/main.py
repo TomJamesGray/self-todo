@@ -16,11 +16,18 @@ def setup():
     password = getConfPart("db","password")
     dbName = getConfPart("db","dbName")
     
-    print("User is {}\nPassword is {}".format(user,password))
-
     db = _mysql.connect(host,user,
             password,dbName)
-
+    
+    return db
 
 def main():
-    setup()
+    conn = setup()
+    choices = {
+        'add':setup
+    }
+    while True:
+        decision = input("> ")
+        func = choices.get(decision)
+        func()
+

@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS `todoLists`;
 CREATE TABLE `todoLists` (
   `listId` int(11) NOT NULL AUTO_INCREMENT,
   `listName` varchar(50) NOT NULL,
-  `creationDate` date DEFAULT NULL,
+  `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`listId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,4 +57,4 @@ CREATE TABLE `todos` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-28  9:43:33
+-- Dump completed on 2016-06-28 12:32:25

@@ -24,5 +24,20 @@ class Api(object):
         self.cursor.execute("INSERT INTO todos (listId,content,completed) \
                 VALUES (?,?,?)",(listId,content,completed))
 
-        def getListItems(self,columns):
+    #Get list id by list name
+    #returned as tuple
+    def getListId(self,listName):
+        self.cursor.execute("SELECT listId FROM todoLists where listName=?",(listName,))
+        return self.cursor.fetchone()
+
+    def getListItems(self,listId,columns):
+        columnNames = ['todoId','listId','content','completed']
+        columnsList = columns.split(",")
+
+        for column in columnsList:
+            if column not in columnNames:
+                raise ValueError("Column name provided is not in column names")
+        
+        self.cursor.execute("SELECT {} FROM todoLists WHERE listId=?".format(columns),(listId,))
+        return self.cursor.fetchall()
 

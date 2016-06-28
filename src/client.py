@@ -21,7 +21,7 @@ class Client():
     def addListItemPrompt(self):
         listToAddTo = input("add - list name > ")
         itemContents = input("add - item > ")
-        listId = self.api.getListId(listToAddTo)[0]
+        listId = self.api.getListId(listToAddTo)
 
         #Last arg (0) is to say this item hasn't been completed
         self.api.saveListItem(listId,itemContents,0)
@@ -41,4 +41,11 @@ class Client():
         listName = input("todos - list name > ")
         listId = self.api.getListId(listName)
         listItems = self.api.getListItems(listId,"content,completed")
-        print(listItems)
+
+        for listItem in listItems:
+            completed = ""
+            if listItem[1] == 1:
+                completed = "✓"
+            elif listItem[1] == 0:
+                completed = "X"
+            print("{} {}".format(completed,listItem[0]))

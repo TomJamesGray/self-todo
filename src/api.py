@@ -25,10 +25,10 @@ class Api(object):
                 VALUES (?,?,?)",(listId,content,completed))
 
     #Get list id by list name
-    #returned as tuple
+    #returned as string
     def getListId(self,listName):
         self.cursor.execute("SELECT listId FROM todoLists where listName=?",(listName,))
-        return self.cursor.fetchone()
+        return self.cursor.fetchone()[0]
 
     def getListItems(self,listId,columns):
         columnNames = ['todoId','listId','content','completed']

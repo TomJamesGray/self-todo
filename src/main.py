@@ -1,5 +1,6 @@
 #Connect to db
 from configparser import SafeConfigParser
+from src.client import Client
 import os
 import _mysql
 
@@ -23,8 +24,9 @@ def setup():
 
 def main():
     conn = setup()
+    client = Client(conn)
     choices = {
-        'add':setup
+        'add':client.addListItem
     }
     while True:
         decision = input("> ")

@@ -18,12 +18,14 @@ class Client():
 
         self.api.createList(listName)    
 
-    def addListItem(self):
+    def addListItemPrompt(self):
         listToAddTo = input("add - list name > ")
         itemContents = input("add - item > ")
         listId = self.api.getListId(listToAddTo)[0]
 
         #Last arg (0) is to say this item hasn't been completed
         self.api.saveListItem(listId,itemContents,0)
+
+
         
 

@@ -26,7 +26,7 @@ def main():
     conn = setup()
     client = Client(conn)
     choices = {
-        'add':client.addListItem,
+        'add':client.addListItemPrompt,
         'create':client.createListPrompt
     }
     while True:

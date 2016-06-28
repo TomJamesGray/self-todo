@@ -27,7 +27,7 @@ def main():
     client = Client(conn)
     choices = {
         'add':client.addListItem,
-        'create':client.createList
+        'create':client.createListPrompt
     }
     while True:
         decision = input("> ")

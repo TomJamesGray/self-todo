@@ -1,12 +1,12 @@
 import oursql
-class Client(object):
+from src.api import Api
+class Client():
     def __init__(self,conn):
-        self.conn = conn
-        self.cursor = self.conn.cursor(oursql.DictCursor)
+        self.api = Api(conn)
 
-    def createList(self):
+    def createListPrompt(self):
         listName = input("create > ")
-        
-        self.cursor.execute("INSERT INTO todoLists SET listName=?",(listName,))
+        self.api.createList(listName)    
+
     def addListItem(self):
         print("Adding list item")

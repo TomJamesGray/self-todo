@@ -28,7 +28,8 @@ def main():
     choices = {
         'add':client.addListItemPrompt,
         'create':client.createListPrompt,
-        'lists':client.listLists
+        'lists':client.listLists,
+        'todos':client.listItems
     }
     while True:
         decision = input("> ")

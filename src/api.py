@@ -25,7 +25,7 @@ class Api(object):
                 VALUES (?,?,?)",(listId,content,completed))
 
     #Get list id by list name
-    #returned as string
+    #returned as int 
     def getListId(self,listName):
         self.cursor.execute("SELECT listId FROM todoLists where listName=?",(listName,))
         return self.cursor.fetchone()[0]
@@ -38,6 +38,6 @@ class Api(object):
             if column not in columnNames:
                 raise ValueError("Column name provided is not in column names")
         
-        self.cursor.execute("SELECT {} FROM todoLists WHERE listId=?".format(columns),(listId,))
+        self.cursor.execute("SELECT {} FROM todos WHERE listId=?".format(columns),(listId,))
         return self.cursor.fetchall()
 

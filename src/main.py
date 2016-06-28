@@ -2,7 +2,7 @@
 from configparser import SafeConfigParser
 from src.client import Client
 import os
-import _mysql
+import oursql
 
 def getConfPart(section,key):
     parser = SafeConfigParser()
@@ -17,8 +17,8 @@ def setup():
     password = getConfPart("db","password")
     dbName = getConfPart("db","dbName")
     
-    db = _mysql.connect(host,user,
-            password,dbName)
+    db = oursql.connect(host=host,user=user,
+            passwd=password,db=dbName)
     
     return db
 
@@ -26,7 +26,8 @@ def main():
     conn = setup()
     client = Client(conn)
     choices = {
-        'add':client.addListItem
+        'add':client.addListItem,
+        'create':client.createList
     }
     while True:
         decision = input("> ")

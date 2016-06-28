@@ -4,5 +4,5 @@ python:
   - "3.3"
 dependencies:
   - pip install pytest
-  - pip install mysqlclient
+  - pip install oursql3
 script: py.test

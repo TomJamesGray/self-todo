@@ -19,3 +19,13 @@ class Api(object):
 
         self.cursor.execute("SELECT {}  FROM todoLists".format(columns))
         return self.cursor.fetchall()
+
+    #Get list id by list name
+    #returned as tuple
+    def getListId(self,listName):
+        self.cursor.execute("SELECT listId FROM todoLists where listName=?",(listName,))
+        return self.cursor.fetchone()
+
+    def saveListItem(self,listId,content,completed):
+        self.cursor.execute("INSERT INTO todos (listId,content,completed) \
+                VALUES (?,?,?)",(listId,content,completed))

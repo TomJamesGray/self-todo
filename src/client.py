@@ -66,3 +66,4 @@ class Client():
     def showHelp(self):
         f = open(os.path.abspath('src/help.txt'),'r')
         print(f.read())
+        f.close()

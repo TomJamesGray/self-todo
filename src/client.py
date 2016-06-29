@@ -74,6 +74,10 @@ class Client():
         else:
             self.api.removeListItem(listItems[todoToRemove][0])
             
+    def removeListPrompt(self):
+       listName = input("rml - list name > ")
+       listId = self.api.getListId(listName)
+       self.api.removeList(listId)
 
     def showHelp(self):
         f = open(os.path.abspath('src/help.txt'),'r')

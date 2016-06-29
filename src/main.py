@@ -33,6 +33,9 @@ def main():
     }
     while True:
         decision = input("> ")
-        func = choices.get(decision)
-        func()
+        try:
+            func = choices.get(decision,)
+            func()
+        except TypeError:
+            print("Unknown command: {}".format(func))
 

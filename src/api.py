@@ -45,5 +45,4 @@ class Api(object):
     
     #Remove the item from the list based off the todoId
     def removeListItem(self,todoId):
-        print("Hi")
         self.cursor.execute("DELETE FROM todos WHERE todoId=?",(todoId,))

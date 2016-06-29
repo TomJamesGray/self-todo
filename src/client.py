@@ -55,13 +55,13 @@ class Client():
         listId = self.api.getListId(listName)
         listItems = self.api.getListItems(listId,"content,completed")
 
-        for listItem in listItems:
+        for i in range(0,len(listItems)):
             completed = ""
-            if listItem[1] == 1:
+            if listItems[i][1] == 1:
                 completed = "✓"
-            elif listItem[1] == 0:
+            elif listItems[i][1] == 0:
                 completed = "X"
-            print("{} {}".format(completed,listItem[0]))
+            print("{}: {} {}".format(i,completed,listItems[i][0]))
 
     def showHelp(self):
         f = open(os.path.abspath('src/help.txt'),'r')

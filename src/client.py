@@ -63,6 +63,18 @@ class Client():
                 completed = "X"
             print("{}: {} {}".format(i,completed,listItems[i][0]))
 
+    def removeListItemPrompt(self):
+        listName = input("rmt - listName > ")
+        listId = self.api.getListId(listName)
+        listItems = self.api.getListItems(listId,"todoId")
+        todoToRemove = int(input("rmt - todo number > "))
+        if todoToRemove >= len(listItems):
+            print("todo number is out of range")
+            return False
+        else:
+            self.api.removeListItem(listItems[todoToRemove][0])
+            
+
     def showHelp(self):
         f = open(os.path.abspath('src/help.txt'),'r')
         print(f.read())

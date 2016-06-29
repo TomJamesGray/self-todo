@@ -42,4 +42,8 @@ class Api(object):
         
         self.cursor.execute("SELECT {} FROM todos WHERE listId=?".format(columns),(listId,))
         return self.cursor.fetchall()
-
+    
+    #Remove the item from the list based off the todoId
+    def removeListItem(self,todoId):
+        print("Hi")
+        self.cursor.execute("DELETE FROM todos WHERE todoId=?",(todoId,))

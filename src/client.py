@@ -1,9 +1,22 @@
 import oursql
+import os
+from configparser import SafeConfigParser
 from src.api import Api
 class Client():
-    def __init__(self,conn):
-        self.api = Api(conn)
-
+    def __init__(self):
+        __host = self.getConfPart("db","host")
+        __user = self.getConfPart("db","user")
+        __password = self.getConfPart("db","password")
+        __dbName = self.getConfPart("db","dbName")
+        self.api = Api(__host,__user,__password,__dbName)
+       
+    def getConfPart(self,section,key):
+        parser = SafeConfigParser()
+        #Get absolute dir for config file
+        configLocation = os.path.abspath("config.ini")
+        parser.read(configLocation)
+        return parser.get(section,key)
+    
     def createListPrompt(self):
         listName = input("create > ")
         #Check if that list name is unique

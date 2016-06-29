@@ -1,8 +1,10 @@
 import oursql
 class Api(object):
-    def __init__(self,conn):
-        self.conn = conn
+    def __init__(self,host,user,password,dbName):
+        self.conn = oursql.connect(host=host,user=user,
+                passwd=password,db=dbName)
         self.cursor = self.conn.cursor()
+
     
     def createList(self,listName):
         self.cursor.execute("INSERT INTO todoLists SET listName=?",(listName,))

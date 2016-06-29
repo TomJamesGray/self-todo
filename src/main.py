@@ -11,20 +11,8 @@ def getConfPart(section,key):
     parser.read(configLocation)
     return parser.get(section,key)
 
-def setup():
-    host = getConfPart("db","host")
-    user = getConfPart("db","user")
-    password = getConfPart("db","password")
-    dbName = getConfPart("db","dbName")
-    
-    db = oursql.connect(host=host,user=user,
-            passwd=password,db=dbName)
-    
-    return db
-
 def main():
-    conn = setup()
-    client = Client(conn)
+    client = Client()
     choices = {
         'add':client.addListItemPrompt,
         'create':client.createListPrompt,

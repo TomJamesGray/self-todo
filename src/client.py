@@ -62,3 +62,7 @@ class Client():
             elif listItem[1] == 0:
                 completed = "X"
             print("{} {}".format(completed,listItem[0]))
+
+    def showHelp(self):
+        f = open(os.path.abspath('src/help.txt'),'r')
+        print(f.read())

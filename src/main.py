@@ -17,7 +17,8 @@ def main():
         'add':client.addListItemPrompt,
         'create':client.createListPrompt,
         'lists':client.listLists,
-        'todos':client.listItems
+        'todos':client.listItems,
+        'help':client.showHelp
     }
     while True:
         decision = input("> ")

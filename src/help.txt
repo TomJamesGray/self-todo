@@ -1,0 +1,5 @@
+add - Add a todo to a list
+create - Make a new todo list
+lists - Show all the todo lists created
+todos - Show all the todos in a list
+help - Display this help message

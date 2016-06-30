@@ -1,5 +1,6 @@
 import oursql
 import os
+import logging
 from configparser import SafeConfigParser
 from src.api import Api
 class Client():
@@ -40,7 +41,7 @@ class Client():
         self.api.saveListItem(listId,itemContents,0)
 
     #Print all the lists in the db
-    def listLists(self):
+    def listListsPrompt(self):
         try:
             listNames = self.api.getLists('listName')
         except ValueError as e:
@@ -50,7 +51,7 @@ class Client():
         for i in range(0,len(listNames)):
             print("{}: {}".format(i,listNames[i][0]))
 
-    def listItems(self):
+    def listItemsPrompt(self):
         listName = input("todos - list name > ")
         listId = self.api.getListId(listName)
         listItems = self.api.getListItems(listId,"content,completed")

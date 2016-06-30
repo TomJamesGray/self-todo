@@ -4,13 +4,6 @@ from src.client import Client
 import os
 import oursql
 
-def getConfPart(section,key):
-    parser = SafeConfigParser()
-    #Get absolute dir for config file
-    configLocation = os.path.abspath("config.ini")
-    parser.read(configLocation)
-    return parser.get(section,key)
-
 def main():
     client = Client()
     choices = {
@@ -24,6 +17,9 @@ def main():
     }
     while True:
         decision = input("> ")
-        func = choices.get(decision)
-        func()
+        try:
+            func = choices.get(decision,main)
+            func()
+        except ValueError as e:
+            print("Value error occued {}".format(e))
 

@@ -8,6 +8,7 @@ addons:
   mariadb: '10.0'
 before_install:
   - mysql -e "CREATE DATABASE IF NOT EXISTS self_todo" -u root
+  - mysql -u root -p self_todo < dump.sql
 dependencies:
   - pip install pytest
   - pip install oursql3

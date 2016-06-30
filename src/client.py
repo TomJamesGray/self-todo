@@ -54,10 +54,17 @@ class Client():
     def listItemsPrompt(self):
         listName = input("list name")
         logging.info("list name is {}".format(listName))
-
-        listItems = self.api.getListItems(self.api.getListId(listName),"content")
-
+        listId = self.api.getListId(listName)
+        listItems = self.api.getListItems(listId,"content,completed")
         print(listItems)
+        for i in range(0,len(listItems)):
+            completed = ""
+            if listItems[i][1] == 1:
+                completed = "✓"
+            elif listItems[i][1] == 0:
+                completed = "X"
+            print("{}: {} {}".format(i,completed,listItems[i][0]))
+  
 
     def removeListItemPrompt(self):
         listName = input("rmt - listName > ")

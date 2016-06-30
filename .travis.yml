@@ -9,7 +9,7 @@ addons:
 before_install:
   - mysql -e "CREATE DATABASE IF NOT EXISTS self_todo" -u root
   - mysql -u root self_todo < dump.sql
-dependencies:
+install:
   - pip install pytest
   - pip install oursql3
 script: py.test

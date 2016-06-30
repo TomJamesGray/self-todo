@@ -39,7 +39,7 @@ class Client():
 
         #Last arg (0) is to say this item hasn't been completed
         self.api.saveListItem(listId,itemContents,0)
-
+    
     #Print all the lists in the db
     def listListsPrompt(self):
         try:
@@ -52,23 +52,19 @@ class Client():
             print("{}: {}".format(i,listNames[i][0]))
 
     def listItemsPrompt(self):
-        listName = input("todos - list name > ")
-        listId = self.api.getListId(listName)
-        listItems = self.api.getListItems(listId,"content,completed")
+        listName = input("list name")
+        logging.info("list name is {}".format(listName))
 
-        for i in range(0,len(listItems)):
-            completed = ""
-            if listItems[i][1] == 1:
-                completed = "✓"
-            elif listItems[i][1] == 0:
-                completed = "X"
-            print("{}: {} {}".format(i,completed,listItems[i][0]))
+        listItems = self.api.getListItems(self.api.getListId(listName),"content")
+
+        print(listItems)
 
     def removeListItemPrompt(self):
         listName = input("rmt - listName > ")
-        listId = self.api.getListId(listName)
+        listIdFromName = self.api.getListId(listName)
         listItems = self.api.getListItems(listId,"todoId")
         todoToRemove = int(input("rmt - todo number > "))
+
         if todoToRemove >= len(listItems):
             print("todo number is out of range")
             return False

@@ -24,9 +24,6 @@ def main():
     }
     while True:
         decision = input("> ")
-        try:
-            func = choices.get(decision,)
-            func()
-        except TypeError:
-            print("Unknown command: {}".format(func))
+        func = choices.get(decision)
+        func()
 

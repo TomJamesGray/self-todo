@@ -30,7 +30,12 @@ class Api(object):
     #returned as int 
     def getListId(self,listName):
         self.cursor.execute("SELECT listId FROM todoLists where listName=?",(listName,))
-        return self.cursor.fetchone()[0]
+        listId = self.cursor.fetchall()
+        print(listId)
+        if listId != None:
+            return listId[0][0]
+        else:
+            raise ValueError("Couldn't find list id")
 
     def getListItems(self,listId,columns):
         columnNames = ['todoId','listId','content','completed']
@@ -40,7 +45,7 @@ class Api(object):
             if column not in columnNames:
                 raise ValueError("Column name provided is not in column names")
         
-        self.cursor.execute("SELECT {} FROM todos WHERE listId=?".format(columns),(listId,))
+        self.cursor.execute("SELECT content FROM todos WHERE listId=?",(listId,))
         return self.cursor.fetchall()
     
     #Remove the item from the list based off the todoId

@@ -16,8 +16,8 @@ def main():
     choices = {
         'add':client.addListItemPrompt,
         'create':client.createListPrompt,
-        'lists':client.listLists,
-        'todos':client.listItems,
+        'lists':client.listListsPrompt,
+        'todos':client.listItemsPrompt,
         'rmt':client.removeListItemPrompt,
         'rml':client.removeListPrompt,
         'help':client.showHelp

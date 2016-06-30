@@ -2,6 +2,12 @@ language: python
 python:
   - "3.4"
   - "3.3"
+services:
+  - mysql
+addons:
+  mariadb: '10.0'
+before_install:
+  - mysql -e "CREATE DATABASE IF NOT EXISTS self_todo" -u root
 dependencies:
   - pip install pytest
   - pip install oursql3

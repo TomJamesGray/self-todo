@@ -29,10 +29,10 @@ class Api(object):
     #Get list id by list name
     #returned as int 
     def getListId(self,listName):
-        self.cursor.execute("SELECT listId FROM todoLists where listName=?",(listName,))
+        self.cursor.execute("SELECT listId FROM todoLists WHERE listName=?",(listName,))
         listId = self.cursor.fetchall()
         print(listId)
-        if listId != None:
+        if listId != None and len(listId) == 1:
             return listId[0][0]
         else:
             raise ValueError("Couldn't find list id")

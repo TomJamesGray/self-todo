@@ -61,10 +61,9 @@ class Client():
 
     def removeListItemPrompt(self):
         listName = input("rmt - listName > ")
-        listIdFromName = self.api.getListId(listName)
+        listId = self.api.getListId(listName)
         listItems = self.api.getListItems(listId,"todoId")
         todoToRemove = int(input("rmt - todo number > "))
-
         if todoToRemove >= len(listItems):
             print("todo number is out of range")
             return False

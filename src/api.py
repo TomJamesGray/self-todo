@@ -31,7 +31,6 @@ class Api(object):
     def getListId(self,listName):
         self.cursor.execute("SELECT listId FROM todoLists WHERE listName=?",(listName,))
         listId = self.cursor.fetchall()
-        print(listId)
         if listId != None and len(listId) == 1:
             return listId[0][0]
         else:

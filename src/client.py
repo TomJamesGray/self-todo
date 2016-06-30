@@ -52,11 +52,9 @@ class Client():
             print("{}: {}".format(i,listNames[i][0]))
 
     def listItemsPrompt(self):
-        listName = input("list name")
-        logging.info("list name is {}".format(listName))
+        listName = input("todos - list name > ")
         listId = self.api.getListId(listName)
         listItems = self.api.getListItems(listId,"content,completed")
-        print(listItems)
         for i in range(0,len(listItems)):
             completed = ""
             if listItems[i][1] == 1:

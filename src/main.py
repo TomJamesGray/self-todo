@@ -3,6 +3,7 @@ from configparser import SafeConfigParser
 from src.client import Client
 import os
 import oursql
+import sys
 
 def main():
     client = Client()
@@ -16,10 +17,13 @@ def main():
         'help':client.showHelp
     }
     while True:
-        decision = input("> ")
         try:
-            func = choices.get(decision,main)
-            func()
-        except ValueError as e:
-            print("Value error occued {}".format(e))
+            decision = input("> ")
+            try:
+                func = choices.get(decision,main)
+                func()
+            except ValueError as e:
+                print("Value error occued {}".format(e))
+        except KeyboardInterrupt:
+            sys.exit(1)
 

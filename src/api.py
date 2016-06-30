@@ -53,3 +53,6 @@ class Api(object):
 
     def removeList(self,listId):
         self.cursor.execute("DELETE FROM todoLists WHERE listId=?",(listId,))
+
+    def closeConnection(self):
+        self.conn.close()

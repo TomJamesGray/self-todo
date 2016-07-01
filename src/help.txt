@@ -4,4 +4,5 @@ lists - Show all the todo lists created
 todos - Show all the todos in a list
 rmt - Remove list item
 rml - Remove list
+mark - Mark list item to be complete/incomplete
 help - Display this help message

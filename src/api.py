@@ -36,6 +36,27 @@ class Api(object):
         else:
             raise ValueError("Couldn't find list id")
 
+    #Can provide content, listId or both, will return all
+    #the matching todoIds
+    def getTodoId(self,content=None,listId=None):
+        stmnt = "SELECT todoId FROM todos WHERE "
+        #TODO use an orm? try and make it a little bit more 'elegant'
+        if content==None and listId==None:
+            raise ValueError("Content and listId both not provided, must \
+                    provide one or both")
+        elif content != None and listId != None:
+            stmnt = stmnt + "content=? AND listId=?"
+            vals = (content,listId)
+        elif content != None and listId == None:
+            stmnt = stmnt + "content=?"
+            vals = (content,)
+        elif content == None and listId == None:
+            stmny = stmnt + "listId=?"
+            vals = (listId,)
+
+        self.cursor.execute(stmnt,vals)
+        return self.cursor.fetchall()
+
     def getListItems(self,listId,columns):
         columnNames = ['todoId','listId','content','completed']
         columnsList = columns.split(",")
@@ -56,3 +77,6 @@ class Api(object):
 
     def closeConnection(self):
         self.conn.close()
+
+    def markListItem(self,todoId,completed):
+        self.cursor.execute("UPDATE todos SET completed=? WHERE todoId=?",(completed,todoId))

@@ -1,6 +1,6 @@
-#Connect to db
+#!/usr/bin/env python3
 from configparser import SafeConfigParser
-from src.client import Client
+from client import Client
 import os
 import oursql
 import sys

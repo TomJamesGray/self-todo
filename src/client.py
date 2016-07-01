@@ -79,6 +79,20 @@ class Client():
        listName = input("rml - list name > ")
        listId = self.api.getListId(listName)
        self.api.removeList(listId)
+    
+    def markListItemPrompt(self):
+        listName = input("mark - list name > ")
+        listId = self.api.getListId(listName)
+        listItems = self.api.getListItems(listId,"todoId,completed")
+        todoToMark = int(input("mark - todo number > "))
+        if todoToMark >=len(listItems):
+            print("todo number is out of range")
+            return False
+        else:
+            if listItems[todoToMark][1] == 0:
+                self.api.markListItem(listItems[todoToMark][0],1)
+            else:
+                self.api.markListItem(listItems[todoToMark][0],0)
 
     def showHelp(self):
         f = open(os.path.abspath('src/help.txt'),'r')

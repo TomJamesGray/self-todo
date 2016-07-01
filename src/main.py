@@ -14,6 +14,7 @@ def main():
         'todos':client.listItemsPrompt,
         'rmt':client.removeListItemPrompt,
         'rml':client.removeListPrompt,
+        'mark':client.markListItemPrompt,
         'help':client.showHelp
     }
     while True:

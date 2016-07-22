@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect,url_for
 from src.api import Api
 
 app = Flask(__name__)
@@ -23,4 +23,4 @@ def createList():
     listName = request.args.get('listName')
     print(listName)
     api.createList(listName)
-    return "Probably worked"
+    return redirect(url_for('index'))

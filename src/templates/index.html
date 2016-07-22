@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Todo lists{% endblock %}
 {% block content %}
+<form action="{{ url_for('createList') }}" method="GET" class="createList">
+	<input name="listName" type="text"></input>
+	<input type="submit" value="Make list"></input>
+</form>
 <ul>
 	{% for list in lists %}
 	<a href="{{ url_for('showTodos',listName=list)}}" ><li>{{ list }}</li></a>

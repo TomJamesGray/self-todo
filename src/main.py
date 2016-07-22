@@ -24,3 +24,11 @@ def createList():
     print(listName)
     api.createList(listName)
     return redirect(url_for('index'))
+
+@app.route('/list/<listName>/create')
+def createTodo(listName):
+    listId = api.getListId(listName)
+    content = request.args.get('content')
+    completed = int(request.args.get('completed',0))
+    api.saveListItem(listId,content,completed)
+    return redirect(url_for('showTodos',listName=listName))

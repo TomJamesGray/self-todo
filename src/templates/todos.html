@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Todos - {{ listName }}{% endblock %}
+{% block content %}
+<ul>
+	{% for todo in todos %}
+		<li>{{ todo }}</li>
+	{% endfor %}
+</ul>
+{% endblock %}

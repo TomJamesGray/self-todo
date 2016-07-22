@@ -16,5 +16,6 @@ def index():
 
 @app.route('/list/<listName>')
 def show_todos(listName):
-    return str(api.getListItems(api.getListId(listName),['content','completed']))
-
+    todos = api.getListItems(api.getListId(listName),['content','completed'])
+    todosBare = [x[0] for x in todos]
+    return render_template('todos.html',todos=todosBare,listName=listName)

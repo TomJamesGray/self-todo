@@ -11,5 +11,5 @@ def index():
 
 @app.route('/list/<listName>')
 def show_todos(listName):
-    return str(api.getListItems(api.getListId(listName),'content,completed'))
+    return str(api.getListItems(api.getListId(listName),['content','completed']))
 

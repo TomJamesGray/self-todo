@@ -18,7 +18,7 @@ class Api(object):
             if column not in columnNames:
                 raise ValueError("Column name desired provided is not in column names")
 
-        self.cursor.execute("SELECT {}  FROM todoLists".format(columns))
+        self.cursor.execute("SELECT {}  FROM todoLists".format(','.join(columns)))
         return self.cursor.fetchall()
 
     def saveListItem(self,listId,content,completed):
@@ -56,15 +56,14 @@ class Api(object):
         self.cursor.execute(stmnt,vals)
         return self.cursor.fetchall()
 
-    def getListItems(self,listId,columns):
+    def getListItems(self,listId,columns=['content']):
         columnNames = ['todoId','listId','content','completed']
-        columnsList = columns.split(",")
 
-        for column in columnsList:
+        for column in columns:
             if column not in columnNames:
                 raise ValueError("Column name provided is not in column names")
         
-        self.cursor.execute("SELECT {} FROM todos WHERE listId=?".format(columns),(listId,))
+        self.cursor.execute("SELECT {} FROM todos WHERE listId=?".format(','.join(columns)),(listId,))
         return self.cursor.fetchall()
     
     #Remove the item from the list based off the todoId

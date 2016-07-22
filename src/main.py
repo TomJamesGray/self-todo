@@ -9,10 +9,8 @@ api = Api('192.168.1.2','example','password','self_todo')
 def index():
     #Get lists and get the list names out of the tuple
     lists = api.getLists()
-    a = []
-    for i in lists:
-        a.append(i[0])
-    return render_template('index.html',lists=a)
+    listsBare = [x[0] for x in lists]
+    return render_template('index.html',lists=listsBare)
 
 @app.route('/list/<listName>')
 def show_todos(listName):

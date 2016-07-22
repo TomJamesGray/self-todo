@@ -3,7 +3,7 @@
 {% block content %}
 <ul>
 	{% for list in lists %}
-	<a href="{{ url_for('show_todos',listName=list)}}" ><li>{{ list }}</li></a>
+	<a href="{{ url_for('showTodos',listName=list)}}" ><li>{{ list }}</li></a>
 	{% endfor %}
 </ul>
 {% endblock %}

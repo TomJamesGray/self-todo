@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask,render_template
+from flask import Flask,render_template,request
 from src.api import Api
 
 app = Flask(__name__)
@@ -13,7 +13,14 @@ def index():
     return render_template('index.html',lists=listsBare)
 
 @app.route('/list/<listName>')
-def show_todos(listName):
+def showTodos(listName):
     todos = api.getListItems(api.getListId(listName),['content','completed'])
     todosBare = [x[0] for x in todos]
     return render_template('todos.html',todos=todosBare,listName=listName)
+
+@app.route('/list/create')
+def createList():
+    listName = request.args.get('listName')
+    print(listName)
+    api.createList(listName)
+    return "Probably worked"

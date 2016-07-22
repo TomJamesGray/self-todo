@@ -10,12 +10,11 @@ class Api(object):
         self.cursor.execute("INSERT INTO todoLists SET listName=?",(listName,))
     
     #Retrieve all columns for lists from db
-    #Columns should be comma seperated
-    def getLists(self,columns):
+    #Columns should provided in a list
+    def getLists(self,columns=['listName']):
         columnNames = ['listId','listName','creationDate']
-        columnsList = columns.split(",")
 
-        for column in columnsList:
+        for column in columns:
             if column not in columnNames:
                 raise ValueError("Column name desired provided is not in column names")
 

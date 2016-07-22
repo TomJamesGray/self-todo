@@ -1,31 +1,18 @@
 #!/usr/bin/env python3
 from configparser import SafeConfigParser
-from client import Client
+from flask import Flask
 import os
 import oursql
 import sys
 
-def main():
-    client = Client()
-    choices = {
-        'add':client.addListItemPrompt,
-        'create':client.createListPrompt,
-        'lists':client.listListsPrompt,
-        'todos':client.listItemsPrompt,
-        'rmt':client.removeListItemPrompt,
-        'rml':client.removeListPrompt,
-        'mark':client.markListItemPrompt,
-        'help':client.showHelp
-    }
-    while True:
-        try:
-            decision = input("> ")
-            try:
-                func = choices.get(decision,main)
-                func()
-            except ValueError as e:
-                print("Value error occued {}".format(e))
-        except KeyboardInterrupt:
-            sys.exit(1)
-if __name__ == "__main__":
-    main()
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Show all todo lists"
+
+@app.route('/list/<listName>')
+def show_todos(listName):
+    return "Show todos for specified list " + listName
+
+

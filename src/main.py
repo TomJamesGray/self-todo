@@ -17,6 +17,15 @@ def showTodos(listName):
     todos = api.getListItems(api.getListId(listName),['content','todoId'])
     return render_template('todos.html',todos=todos,listName=listName)
 
+@app.route('/list/<listName>/mark')
+def markTodos(listName):
+    todoIds = []
+    for key in request.args:
+        for value in request.args.getlist(key):
+            print(value)
+            api.switchItemCompletion(value)
+    return "Probs done"
+
 @app.route('/list/create')
 def createList():
     listName = request.args.get('listName')

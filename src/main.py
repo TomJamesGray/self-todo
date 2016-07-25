@@ -14,9 +14,8 @@ def index():
 
 @app.route('/list/<listName>')
 def showTodos(listName):
-    todos = api.getListItems(api.getListId(listName),['content','completed'])
-    todosBare = [x[0] for x in todos]
-    return render_template('todos.html',todos=todosBare,listName=listName)
+    todos = api.getListItems(api.getListId(listName),['content','todoId'])
+    return render_template('todos.html',todos=todos,listName=listName)
 
 @app.route('/list/create')
 def createList():

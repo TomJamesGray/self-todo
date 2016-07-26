@@ -28,6 +28,14 @@ def markTodos(listName):
     
     return redirect(url_for('showTodos',listName=listName))
 
+@app.route('/list/<listName>/delete')
+def deleteTodos(listName):
+    for value in request.args.getlist('todo'):
+        print(value)
+        api.removeListItem(value)
+
+    return redirect(url_for('showTodos',listName=listName))
+
 @app.route('/list/create')
 def createList():
     listName = request.args.get('listName')

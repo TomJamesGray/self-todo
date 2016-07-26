@@ -23,7 +23,7 @@
 	markTodosButton = document.getElementById('markTodos');
 
 	deleteButton.addEventListener('click',function(){
-		pessed='delete'
+		url='{{ url_for('deleteTodos',listName=listName) }}'
 	});
 	markTodosButton.addEventListener('click',function(){
 		url='{{ url_for('markTodos',listName=listName) }}'

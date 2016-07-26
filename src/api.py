@@ -63,7 +63,7 @@ class Api(object):
             if column not in columnNames:
                 raise ValueError("Column name provided is not in column names")
         
-        self.cursor.execute("SELECT {} FROM todos WHERE listId=?".format(','.join(columns)),(listId,))
+        self.cursor.execute("SELECT {} FROM todos WHERE listId=? ORDER BY completed".format(','.join(columns)),(listId,))
         return self.cursor.fetchall()
     
     #Remove the item from the list based off the todoId

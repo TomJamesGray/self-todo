@@ -8,9 +8,13 @@
 <!-- Start todos -->
 <form id="modifyTodos">
 	<ul>
-		{% for todo in todos %}
+		{% for content,todoId,completed in todos %}
 		<li>
-			<input type="checkbox" name="todo" value="{{ todo[1] }}">{{ todo[0] }}
+			{% if completed == 1 %}
+				<strike><input type="checkbox" name="todo" value="{{ todoId }}">{{ content }}</strike>
+			{% else %}
+					<input type="checkbox" name="todo" value="{{ todoId }}">{{ content }}
+			{% endif %}
 		</li>
 		{% endfor %}
 	</ul>

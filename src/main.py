@@ -19,12 +19,14 @@ def showTodos(listName):
 
 @app.route('/list/<listName>/mark')
 def markTodos(listName):
+    #TODO Have ability to specify completion or incompletion
+    #not just toggling
     todoIds = []
-    for key in request.args:
-        for value in request.args.getlist(key):
-            print(value)
-            api.switchItemCompletion(value)
-    return "Probs done"
+    for value in request.args.getlist('todo'):
+        print(value)
+        api.switchItemCompletion(value)
+    
+    return redirect(url_for('showTodos',listName=listName))
 
 @app.route('/list/create')
 def createList():

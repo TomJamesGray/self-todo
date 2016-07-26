@@ -5,9 +5,31 @@
 	<input type="text" name="content"></input>
 	<input type="submit" value="Create todo"></input>
 </form>
-<ul>
-	{% for todo in todos %}
-		<li>{{ todo }}</li>
-	{% endfor %}
-</ul>
+<!-- Start todos -->
+<form id="modifyTodos">
+	<ul>
+		{% for todo in todos %}
+		<li>
+			<input type="checkbox" name="todo" value="{{ todo[1] }}">{{ todo[0] }}
+		</li>
+		{% endfor %}
+	</ul>
+	<input type="submit" value="Delete todos" name="delete" id="delete">
+	<input type="submit" value="Mark todos as finished" name="markTodos" id="markTodos">
+</form>
+<script type="text/javascript">
+	form = document.getElementById('modifyTodos');
+	deleteButton = document.getElementById('delete');
+	markTodosButton = document.getElementById('markTodos');
+
+	deleteButton.addEventListener('click',function(){
+		pessed='delete'
+	});
+	markTodosButton.addEventListener('click',function(){
+		url='{{ url_for('markTodos',listName=listName) }}'
+	});
+	
+	form.addEventListener('submit',function(){form.action=url});
+
+</script>
 {% endblock %}

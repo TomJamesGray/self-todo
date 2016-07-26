@@ -81,10 +81,11 @@ class Api(object):
     
     def switchItemCompletion(self,todoId):
         self.cursor.execute("SELECT completed FROM todos WHERE todoId=?",(todoId,))
-        status = self.cursor.fetchone()
-        print(status)
+        curStatus = self.cursor.fetchall()[0][0]
+        print("status: {}".format(curStatus))
+        print("New status: {}".format(int(not curStatus)))
         #Not status will flip the 0 to 1 or vice versa
-        self.markListItem(todoId,(not status))
+        self.markListItem(todoId,(int(not curStatus)))
 
     def switchTodoPriority(self,todoId1,todoId2):
         self.cursor.execute("SELECT listId,content,completed FROM todos WHERE todoId=? OR todoId=?",

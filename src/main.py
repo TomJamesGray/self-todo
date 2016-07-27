@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 from flask import Flask,render_template,request,redirect,url_for
 from src.api import Api
+from helpers import getConfPart
 
 app = Flask(__name__)
-api = Api('192.168.1.2','example','password','self_todo')
+#Get config parts for the api
+host = getConfPart("db","host")
+user = getConfPart("db","user")
+password = getConfPart("db","password")
+dbName = getConfPart("db","dbName")
+#Make instance of api using db paramaters from
+#config file
+api = Api(host,user,password,dbName)
 
 @app.route('/')
 def index():

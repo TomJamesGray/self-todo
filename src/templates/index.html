@@ -5,9 +5,15 @@
 	<input name="listName" type="text"></input>
 	<input type="submit" value="Make list"></input>
 </form>
+<form id="deleteList" method="GET" action="{{ url_for('deleteList') }}">
 <ul>
-	{% for list in lists %}
-	<li><a href="{{ url_for('showTodos',listName=list)}}" >{{ list }}</a></li>
+	{% for listName,listId in lists %}
+	<li>
+		<input type="checkbox" name="list" value="{{ listId }}">
+		<a href="{{ url_for('showTodos',listName=listName)}}" >{{ listName }}</a>
+	</li>
 	{% endfor %}
 </ul>
+<input type="submit" value="Delete lists" name="delete">
+</form>
 {% endblock %}

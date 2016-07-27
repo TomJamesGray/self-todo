@@ -16,9 +16,8 @@ api = Api(host,user,password,dbName)
 @app.route('/')
 def index():
     #Get lists and get the list names out of the tuple
-    lists = api.getLists()
-    listsBare = [x[0] for x in lists]
-    return render_template('index.html',lists=listsBare)
+    lists = api.getLists(['listName','listId'])
+    return render_template('index.html',lists=lists)
 
 @app.route('/list/<listName>')
 def showTodos(listName):
@@ -48,7 +47,17 @@ def deleteTodos(listName):
 def createList():
     listName = request.args.get('listName')
     print(listName)
+    if listName == "":
+        return redirect(url_for('index'))
     api.createList(listName)
+    return redirect(url_for('index'))
+
+@app.route('/list/delete')
+def deleteList():
+    for listId in request.args.getlist('list'):
+        print(listId)
+        api.removeList(listId)
+
     return redirect(url_for('index'))
 
 @app.route('/list/<listName>/create')

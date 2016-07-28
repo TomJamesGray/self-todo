@@ -27,6 +27,10 @@ header{
 	padding-bottom:35px;
 	margin-bottom:-20px;
 }
+.form-inline .form-control{
+	/*Override bootstrap default width*/
+	width:250px;
+}
 header > h1 > a{
 	color:#000 !important;
 }

@@ -1,9 +1,12 @@
 # self-todo
+![Todo lists](todoLists.png)
+![Todos](todos.png)
 ## A simple self hosted todo list
 
 The main point of this repo is to provide the api however it also contains 
 a client which can be invoked by running src/main.py however this client is somewhat
 limited but is still functional
+
 
 ### Dependencies:
 * mysql

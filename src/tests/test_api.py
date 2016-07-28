@@ -22,7 +22,7 @@ def makeList(request):
 
 def testListIsPresent(makeList):
     global listName
-    if ("pyTestList",) in makeList.getLists("listName"):
+    if ("pyTestList",) in makeList.getLists(["listName"]):
         assert True
     else:
         assert False

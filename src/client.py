@@ -2,7 +2,7 @@ import oursql
 import os
 import logging
 from configparser import SafeConfigParser
-from api import Api
+from src.api import Api
 class Client():
     def __init__(self):
         __host = self.getConfPart("db","host")

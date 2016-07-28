@@ -10,16 +10,15 @@ class Api(object):
         self.cursor.execute("INSERT INTO todoLists SET listName=?",(listName,))
     
     #Retrieve all columns for lists from db
-    #Columns should be comma seperated
-    def getLists(self,columns):
+    #Columns should provided in a list
+    def getLists(self,columns=['listName']):
         columnNames = ['listId','listName','creationDate']
-        columnsList = columns.split(",")
 
-        for column in columnsList:
+        for column in columns:
             if column not in columnNames:
                 raise ValueError("Column name desired provided is not in column names")
 
-        self.cursor.execute("SELECT {}  FROM todoLists".format(columns))
+        self.cursor.execute("SELECT {}  FROM todoLists".format(','.join(columns)))
         return self.cursor.fetchall()
 
     def saveListItem(self,listId,content,completed):
@@ -57,15 +56,14 @@ class Api(object):
         self.cursor.execute(stmnt,vals)
         return self.cursor.fetchall()
 
-    def getListItems(self,listId,columns):
+    def getListItems(self,listId,columns=['content']):
         columnNames = ['todoId','listId','content','completed']
-        columnsList = columns.split(",")
 
-        for column in columnsList:
+        for column in columns:
             if column not in columnNames:
                 raise ValueError("Column name provided is not in column names")
         
-        self.cursor.execute("SELECT {} FROM todos WHERE listId=?".format(columns),(listId,))
+        self.cursor.execute("SELECT {} FROM todos WHERE listId=? ORDER BY completed".format(','.join(columns)),(listId,))
         return self.cursor.fetchall()
     
     #Remove the item from the list based off the todoId
@@ -80,6 +78,14 @@ class Api(object):
 
     def markListItem(self,todoId,completed):
         self.cursor.execute("UPDATE todos SET completed=? WHERE todoId=?",(completed,todoId))
+    
+    def switchItemCompletion(self,todoId):
+        self.cursor.execute("SELECT completed FROM todos WHERE todoId=?",(todoId,))
+        curStatus = self.cursor.fetchall()[0][0]
+        print("status: {}".format(curStatus))
+        print("New status: {}".format(int(not curStatus)))
+        #Not status will flip the 0 to 1 or vice versa
+        self.markListItem(todoId,(int(not curStatus)))
 
     def switchTodoPriority(self,todoId1,todoId2):
         self.cursor.execute("SELECT listId,content,completed FROM todos WHERE todoId=? OR todoId=?",

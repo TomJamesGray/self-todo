@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Todo lists{% endblock %}
+{% block content %}
+<form action="{{ url_for('createList') }}" method="GET" class="createList">
+	<input name="listName" type="text"></input>
+	<input type="submit" value="Make list"></input>
+</form>
+<form id="deleteList" method="GET" action="{{ url_for('deleteList') }}">
+	<ul>
+		{% for listName,listId in lists %}
+			<li>
+				<input type="checkbox" name="list" value="{{ listId }}">
+				<a href="{{ url_for('showTodos',listName=listName)}}" >{{ listName }}</a>
+			</li>
+		{% endfor %}
+	</ul>
+	<input type="submit" value="Delete lists" name="delete">
+</form>
+{% endblock %}

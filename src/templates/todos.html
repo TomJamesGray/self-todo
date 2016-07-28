@@ -4,7 +4,7 @@
 <form action="{{ url_for('createTodo',listName=listName) }}" method="GET" class="createTodoi form-inline">
 	<div class="form-group">
 		<input type="text" name="content"></input>
-		<input type="submit" value="Create todo"></input>
+		<input type="submit" value="Create todo" class="btn btn-default"></input>
 	</div>
 </form>
 <hr/>
@@ -22,22 +22,7 @@
 		{% endfor %}
 	</ul>
 	<hr/>
-	<input type="submit" value="Delete todos" name="delete" id="delete">
-	<input type="submit" value="Toggle completion" name="markTodos" id="markTodos">
+	<button type="submit" formaction="{{ url_for('deleteTodos',listName=listName) }}" class="btn btn-danger">Delete todos</button>
+	<button type="submit" formaction="{{ url_for('markTodos',listName=listName) }}" class="btn btn-success">Mark todos</button>
 </form>
-<script type="text/javascript">
-	form = document.getElementById('modifyTodos');
-	deleteButton = document.getElementById('delete');
-	markTodosButton = document.getElementById('markTodos');
-
-	deleteButton.addEventListener('click',function(){
-		url='{{ url_for('deleteTodos',listName=listName) }}'
-	});
-	markTodosButton.addEventListener('click',function(){
-		url='{{ url_for('markTodos',listName=listName) }}'
-	});
-	
-	form.addEventListener('submit',function(){form.action=url});
-
-</script>
 {% endblock %}

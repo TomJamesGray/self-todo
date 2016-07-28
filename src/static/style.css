@@ -46,4 +46,16 @@ header > h1 > a{
 	.btn-primary{
 		margin-top:10px;
 		width:100%;
+	}
+	.form-inline .form-control{
+		width:100%
+	}
+}
+/*Tablets, 768px-1024px*/
+@media (max-width:1024px) and (min-width:768px){
+	#content{
+		width:80%;
+	}
+	header{
+		padding-left:10%;
 }

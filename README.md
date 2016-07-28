@@ -1,17 +1,18 @@
 # self-todo
+## Todo lists
 ![Todo lists](todoLists.png)
+## Todos
 ![Todos](todos.png)
 ## A simple self hosted todo list
 
-The main point of this repo is to provide the api however it also contains 
-a client which can be invoked by running src/main.py however this client is somewhat
-limited but is still functional
-
+self-todo is a self-hosted todo lists manager that makes use of oursql3
+to access a sql server with the todos, it has a simple web frontend and a 
+command line client
 
 ### Dependencies:
-* mysql
-* pytest
+* mysql-server
 * oursql3
+* flask
 
 ### How to use it
 Firstly you will need to set up a databse with the correct schema (found in dump.sql)

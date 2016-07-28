@@ -3,7 +3,7 @@
 {% block content %}
 <form action="{{ url_for('createList') }}" method="GET" class="createList form-inline">
 	<div class="form-group">
-		<input name="listName" type="text"></input>
+		<input name="listName" class="form-control" type="text"></input>
 		<button type="submit" class="btn btn-default">Make list</button>
 	</div>
 </form>

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Todos - {{ listName }}{% endblock %}
+{% block header %}{{ listName }}{% endblock %}
 {% block content %}
 <form action="{{ url_for('createTodo',listName=listName) }}" method="GET" class="createTodoi form-inline">
 	<div class="form-group">

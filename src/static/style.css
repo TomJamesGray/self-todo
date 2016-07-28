@@ -7,12 +7,8 @@ body{
 }
 #content{
 	width:60%;
-	display:flex;
 	margin:0 auto;
-	padding:0px;
-	flex-flow:column;
-	height:100%;
-	padding-top:-10px;
+	background-color:#FFF;
 }
 header{
 	background-color:#2C90DE;
@@ -25,8 +21,7 @@ header{
 }
 #content > article{
 	padding:10px;
-	background-color:#FFF;
 	-webkit-box-shadow: 11px 11px 9px -6px rgba(0,0,0,0.53);
 	-moz-box-shadow: 11px 11px 9px -6px rgba(0,0,0,0.53);
-	box-shadow: 11px 11px 9px -6px rgba(0,0,0,0.53);	
+	box-shadow: 11px 11px 9px -6px rgba(0,0,0,0.53);
 }

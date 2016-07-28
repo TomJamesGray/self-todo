@@ -1,23 +1,17 @@
 import oursql
 import os
 import logging
-from configparser import SafeConfigParser
+import sys
 from src.api import Api
+from src.helpers import getConfPart
 class Client():
     def __init__(self):
-        __host = self.getConfPart("db","host")
-        __user = self.getConfPart("db","user")
-        __password = self.getConfPart("db","password")
-        __dbName = self.getConfPart("db","dbName")
+        __host = getConfPart("db","host")
+        __user = getConfPart("db","user")
+        __password = getConfPart("db","password")
+        __dbName = getConfPart("db","dbName")
         self.api = Api(__host,__user,__password,__dbName)
-       
-    def getConfPart(self,section,key):
-        parser = SafeConfigParser()
-        #Get absolute dir for config file
-        configLocation = os.path.abspath("config.ini")
-        parser.read(configLocation)
-        return parser.get(section,key)
-    
+        
     def createListPrompt(self):
         listName = input("create > ")
         #Check if that list name is unique
@@ -54,7 +48,7 @@ class Client():
     def listItemsPrompt(self):
         listName = input("todos - list name > ")
         listId = self.api.getListId(listName)
-        listItems = self.api.getListItems(listId,"content,completed")
+        listItems = self.api.getListItems(listId,["content","completed"])
         for i in range(0,len(listItems)):
             completed = ""
             if listItems[i][1] == 1:
@@ -67,7 +61,7 @@ class Client():
     def removeListItemPrompt(self):
         listName = input("rmt - listName > ")
         listId = self.api.getListId(listName)
-        listItems = self.api.getListItems(listId,"todoId")
+        listItems = self.api.getListItems(listId,["todoId"])
         todoToRemove = int(input("rmt - todo number > "))
         if todoToRemove >= len(listItems):
             print("todo number is out of range")
@@ -83,7 +77,7 @@ class Client():
     def markListItemPrompt(self):
         listName = input("mark - list name > ")
         listId = self.api.getListId(listName)
-        listItems = self.api.getListItems(listId,"todoId,completed")
+        listItems = self.api.getListItems(listId,["todoId","completed"])
         todoToMark = int(input("mark - todo number > "))
         if todoToMark >=len(listItems):
             print("todo number is out of range")
@@ -98,3 +92,27 @@ class Client():
         f = open(os.path.abspath('src/help.txt'),'r')
         print(f.read())
         f.close()
+
+    def runIt(self):
+        client = Client()
+        choices = {
+            'add':client.addListItemPrompt,
+            'create':client.createListPrompt,
+            'lists':client.listListsPrompt,
+            'todos':client.listItemsPrompt,
+            'rmt':client.removeListItemPrompt,
+            'rml':client.removeListPrompt,
+            'mark':client.markListItemPrompt,
+            'help':client.showHelp
+        }
+        while True:
+            try:
+                decision = input("> ")
+                try:
+                    func = choices.get(decision,self.runIt)
+                    func()
+                except ValueError as e:
+                    print("Value error occued {}".format(e))
+            except KeyboardInterrupt:
+                    sys.exit(1)
+

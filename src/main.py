@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from flask import Flask,render_template,request,redirect,url_for
 from src.api import Api
-from helpers import getConfPart
+from src.helpers import getConfPart
 
 app = Flask(__name__)
 #Get config parts for the api

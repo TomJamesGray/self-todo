@@ -9,14 +9,20 @@
 </form>
 <hr/>
 <form id="deleteList" class="form-inline" method="GET" action="{{ url_for('deleteList') }}">
-	<ul>
-		{% for listName,listId in lists %}
-			<li>
-				<input type="checkbox" name="list" value="{{ listId }}">
-				<a href="{{ url_for('showTodos',listName=listName)}}" >{{ listName }}</a>
-			</li>
-		{% endfor %}
-	</ul>
+		{% if lists is equalto [] %}
+			<h4>No lists</h4>
+		{% else %}
+			<ul class="list-unstyled">
+			{% for listName,listId in lists %}
+				<li>
+					<label>
+						<input type="checkbox" name="list" value="{{ listId }}">
+						<a href="{{ url_for('showTodos',listName=listName)}}" >{{ listName }}</a>
+					</label>
+				</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
 	<hr/>
 	<button type="submit" class="btn btn-danger">Delete lists</button>
 </form>

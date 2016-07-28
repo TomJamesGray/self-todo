@@ -11,17 +11,29 @@
 <hr/>
 <!-- Start todos -->
 <form id="modifyTodos" class="form-inline">
-	<ul>
-		{% for content,todoId,completed in todos %}
-		<li>
-			{% if completed == 1 %}
-				<strike><input type="checkbox" name="todo" value="{{ todoId }}">{{ content }}</strike>
-			{% else %}
-					<input type="checkbox" name="todo" value="{{ todoId }}">{{ content }}
-			{% endif %}
-		</li>
-		{% endfor %}
-	</ul>
+	{% if todos is equalto [] %}
+		<h4>No todos</h4>
+	{% else %}
+		<ul class="list-unstyled">
+			{% for content,todoId,completed in todos %}
+			<li>
+				{% if completed == 1 %}
+					<label>
+						<strike>
+							<input type="checkbox" name="todo" value="{{ todoId }}">
+							{{ content }}
+						</strike>
+					</label>
+				{% else %}
+					<label>
+						<input type="checkbox" name="todo" value="{{ todoId }}">
+						{{ content }}
+					</label>
+				{% endif %}
+			</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
 	<hr/>
 	<button type="submit" formaction="{{ url_for('deleteTodos',listName=listName) }}" class="btn btn-danger">Delete todos</button>
 	<button type="submit" formaction="{{ url_for('markTodos',listName=listName) }}" class="btn btn-success">Mark todos</button>

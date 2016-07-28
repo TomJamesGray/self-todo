@@ -44,7 +44,7 @@ CREATE TABLE `todos` (
   `completed` int(1) DEFAULT NULL,
   PRIMARY KEY (`todoId`),
   KEY `listId` (`listId`),
-  CONSTRAINT `todos_ibfk_1` FOREIGN KEY (`listId`) REFERENCES `todoLists` (`listId`)
+  CONSTRAINT `todos_ibfk_1` FOREIGN KEY (`listId`) REFERENCES `todoLists` (`listId`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

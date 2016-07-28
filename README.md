@@ -1,5 +1,7 @@
 # self-todo
+## Todo lists
 ![Todo lists](todoLists.png)
+## Todos
 ![Todos](todos.png)
 ## A simple self hosted todo list
 
@@ -9,9 +11,9 @@ limited but is still functional
 
 
 ### Dependencies:
-* mysql
-* pytest
+* mysql-server
 * oursql3
+* flask
 
 ### How to use it
 Firstly you will need to set up a databse with the correct schema (found in dump.sql)

@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Todos - {{ listName }}{% endblock %}
 {% block content %}
-<form action="{{ url_for('createTodo',listName=listName) }}" method="GET" class="createTodo">
-	<input type="text" name="content"></input>
-	<input type="submit" value="Create todo"></input>
+<form action="{{ url_for('createTodo',listName=listName) }}" method="GET" class="createTodoi form-inline">
+	<div class="form-group">
+		<input type="text" name="content"></input>
+		<input type="submit" value="Create todo"></input>
+	</div>
 </form>
+<hr/>
 <!-- Start todos -->
-<form id="modifyTodos">
+<form id="modifyTodos" class="form-inline">
 	<ul>
 		{% for content,todoId,completed in todos %}
 		<li>
@@ -18,6 +21,7 @@
 		</li>
 		{% endfor %}
 	</ul>
+	<hr/>
 	<input type="submit" value="Delete todos" name="delete" id="delete">
 	<input type="submit" value="Toggle completion" name="markTodos" id="markTodos">
 </form>

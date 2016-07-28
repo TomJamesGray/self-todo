@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="{{ url_for('static',filename='bootstrap.min.css') }}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}" type="text/css">
 		<title>{% block title %}{% endblock %} - Self todo</title>
 	</head>
 	<body>
-		<div id="content">{% block content %}{% endblock %}</div>
+		<header>
+			<h1>self-todo</h1>
+		</header>
+		<div id="content">
+			<article>
+				{% block content %}{% endblock %}
+			</article>
+		</div>
 	</body>
 </html>

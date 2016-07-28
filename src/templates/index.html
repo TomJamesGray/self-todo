@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Todo lists{% endblock %}
 {% block content %}
-<form action="{{ url_for('createList') }}" method="GET" class="createList">
-	<input name="listName" type="text"></input>
-	<input type="submit" value="Make list"></input>
+<form action="{{ url_for('createList') }}" method="GET" class="createList form-inline">
+	<div class="form-group">
+		<input name="listName" type="text"></input>
+		<input type="submit" value="Make list"></input>
+	</div>
 </form>
-<form id="deleteList" method="GET" action="{{ url_for('deleteList') }}">
+<hr/>
+<form id="deleteList" class="form-inline" method="GET" action="{{ url_for('deleteList') }}">
 	<ul>
 		{% for listName,listId in lists %}
 			<li>
@@ -14,6 +17,7 @@
 			</li>
 		{% endfor %}
 	</ul>
+	<hr/>
 	<input type="submit" value="Delete lists" name="delete">
 </form>
 {% endblock %}

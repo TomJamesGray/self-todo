@@ -1,4 +1,5 @@
 import oursql
+import bcrypt
 class Api(object):
     def __init__(self,host,user,password,dbName):
         self.conn = oursql.connect(host=host,user=user,
@@ -95,3 +96,9 @@ class Api(object):
         stmnt = "UPDATE todos SET listId=?,content=?,completed=? WHERE todoId=?"
         self.cursor.execute(stmnt,todoData[0] + (todoId2,))
         self.cursor.execute(stmnt,todoData[1] + (todoId1,))
+
+    def createUser(self,userName,password,role="user"):
+        #Hash the password with a salt
+        hashedPw = bcrypt.hashpw(password.encode('utf8'),bcrypt.gensalt())
+        self.cursor.execute("INSERT INTO users (userName,password,role) \
+            VALUES (?,?,?)",(userName,hashedPw,role))

@@ -21,7 +21,11 @@ api = Api(host,user,password,dbName)
 
 @app.route('/')
 def index():
-    #Get lists and get the list names out of the tuple
+    return "Index"
+
+@app.route('/lists')
+@flask_login.login_required
+def showLists():
     lists = api.getLists(['listName','listId'])
     return render_template('index.html',lists=lists)
 
@@ -92,6 +96,10 @@ def requestloader(request):
     else:
         return None
 
+@loginManager.unauthorized_handler
+def unoauthorized():
+    return "Unortharized"
+
 @app.route('/login',methods=['GET','POST'])
 def login():
     if request.method == 'POST':
@@ -102,7 +110,7 @@ def login():
         if api.validateUser(userName,password):
             #User is valid
             userId = api.getUserId(userName)
-            flask_login.login_user(User(userId))
+            flask_login.login_user(User(userId),remember=True)
             return redirect(url_for('secret'))
         else:
             #User isn't valid, return to login page
@@ -122,6 +130,3 @@ def logout():
 def secret():
     return "Logged in as: {}".format(flask_login.current_user.get_id())
 
-@loginManager.unauthorized_handler
-def unoauthorized():
-    return "Unortharized"

@@ -27,11 +27,13 @@ def index():
     return render_template('index.html',lists=lists)
 
 @app.route('/list/<listName>')
+@flask_login.login_required
 def showTodos(listName):
     todos = api.getListItems(api.getListId(listName),['content','todoId','completed'])
     return render_template('todos.html',todos=todos,listName=listName)
 
 @app.route('/list/<listName>/mark')
+@flask_login.login_required
 def markTodos(listName):
     #TODO Have ability to specify completion or incompletion
     #not just toggling
@@ -43,6 +45,7 @@ def markTodos(listName):
     return redirect(url_for('showTodos',listName=listName))
 
 @app.route('/list/<listName>/delete')
+@flask_login.login_required
 def deleteTodos(listName):
     for value in request.args.getlist('todo'):
         print(value)
@@ -51,6 +54,7 @@ def deleteTodos(listName):
     return redirect(url_for('showTodos',listName=listName))
 
 @app.route('/list/create')
+@flask_login.login_required
 def createList():
     listName = request.args.get('listName')
     print(listName)
@@ -60,6 +64,7 @@ def createList():
     return redirect(url_for('index'))
 
 @app.route('/list/delete')
+@flask_login.login_required
 def deleteList():
     for listId in request.args.getlist('list'):
         print(listId)
@@ -68,6 +73,7 @@ def deleteList():
     return redirect(url_for('index'))
 
 @app.route('/list/<listName>/create')
+@flask_login.login_required
 def createTodo(listName):
     listId = api.getListId(listName)
     content = request.args.get('content')

@@ -101,7 +101,7 @@ def requestloader(request):
 
 @loginManager.unauthorized_handler
 def unoauthorized():
-    return "Unortharized"
+    return redirect(url_for('login'))
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -125,5 +125,5 @@ def login():
 @flask_login.login_required
 def logout():
     flask_login.logout_user()
-    return "Logged out"
+    return redirect(url_for('login'))
 

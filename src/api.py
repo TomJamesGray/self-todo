@@ -102,3 +102,16 @@ class Api(object):
         hashedPw = bcrypt.hashpw(password.encode('utf8'),bcrypt.gensalt())
         self.cursor.execute("INSERT INTO users (userName,password,role) \
             VALUES (?,?,?)",(userName,hashedPw,role))
+
+    def validateUser(self,userName,password):
+        #Get user by userName and compare hashed+salted PWs
+        self.cursor.execute("SELECT password FROM users WHERE userName=?",
+                (userName))
+        __actualPassword = self.cursor.fetchall()[0][0].encode('utf8')
+        
+        if bcrypt.hashpw(password.encode('utf8'),__actualPassword) ==  __actualPassword:
+            #User password is valid
+            return True
+        else:
+            return False
+

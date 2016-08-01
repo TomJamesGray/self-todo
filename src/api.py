@@ -130,3 +130,7 @@ class Api(object):
             return True
         else:
             return False
+
+    def deleteUser(self,userId):
+        self.cursor.execute("DELETE FROM users WHERE userId=?",(userId,))
+        return True

@@ -114,7 +114,7 @@ def login():
             #User is valid
             userId = api.getUserId(userName)
             flask_login.login_user(User(userId),remember=True)
-            return redirect(url_for('secret'))
+            return redirect(url_for('index'))
         else:
             #User isn't valid, return to login page
             return render_template('login.html')
@@ -126,10 +126,4 @@ def login():
 def logout():
     flask_login.logout_user()
     return "Logged out"
-
-#Testing purposes only
-@app.route('/secret')
-@flask_login.login_required
-def secret():
-    return "Logged in as: {}".format(flask_login.current_user.get_id())
 

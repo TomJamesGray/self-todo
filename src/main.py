@@ -20,13 +20,10 @@ dbName = getConfPart("db","dbName")
 api = Api(host,user,password,dbName)
 
 @app.route('/')
-def index():
-    return "Index"
-
 @app.route('/lists')
 @flask_login.login_required
-def showLists():
-    lists = api.getLists(['listName','listId'])
+def index():
+    lists = api.getLists(flask_login.current_user.get_id(),['listName','listId'])
     return render_template('index.html',lists=lists)
 
 @app.route('/list/<listName>')
@@ -59,7 +56,7 @@ def createList():
     print(listName)
     if listName == "":
         return redirect(url_for('index'))
-    api.createList(listName)
+    api.createList(listName,flask_login.current_user.get_id())
     return redirect(url_for('index'))
 
 @app.route('/list/delete')

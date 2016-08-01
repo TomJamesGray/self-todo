@@ -88,9 +88,9 @@ def userLoader(userId):
 def requestloader(request):
     userId = request.form.get('userId')
     if api.isUser(userId):
-        return None
-    else:
         return User(userId)
+    else:
+        return None
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -124,4 +124,4 @@ def secret():
 
 @loginManager.unauthorized_handler
 def unoauthorized():
-    return "Piss off"
+    return "Unortharized"

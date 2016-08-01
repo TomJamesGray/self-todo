@@ -7,19 +7,21 @@ class Api(object):
         self.cursor = self.conn.cursor()
 
     
-    def createList(self,listName):
-        self.cursor.execute("INSERT INTO todoLists SET listName=?",(listName,))
+    def createList(self,listName,userId):
+        self.cursor.execute("INSERT INTO todoLists (listName,userId) \
+                VALUES (?,?)",(listName,userId))
     
     #Retrieve all columns for lists from db
     #Columns should provided in a list
-    def getLists(self,columns=['listName']):
+    def getLists(self,userId,columns=['listName']):
         columnNames = ['listId','listName','creationDate']
 
         for column in columns:
             if column not in columnNames:
                 raise ValueError("Column name desired provided is not in column names")
 
-        self.cursor.execute("SELECT {}  FROM todoLists".format(','.join(columns)))
+        self.cursor.execute("SELECT {}  FROM todoLists WHERE userId=?".format(','.join(columns)),
+            (userId,))
         return self.cursor.fetchall()
 
     def saveListItem(self,listId,content,completed):
@@ -29,7 +31,8 @@ class Api(object):
     #Get list id by list name
     #returned as int 
     def getListId(self,listName):
-        self.cursor.execute("SELECT listId FROM todoLists WHERE listName=?",(listName,))
+        self.cursor.execute("SELECT listId FROM todoLists WHERE listName=?",
+            (listName,))
         listId = self.cursor.fetchall()
         if listId != None and len(listId) == 1:
             return listId[0][0]

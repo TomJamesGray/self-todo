@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-from flask import Flask,render_template,request,redirect,url_for
+import flask_login
+from functools import wraps
+from flask import g,Flask,render_template,request,redirect,url_for
 from src.api import Api
 from src.helpers import getConfPart
+from src.user import User
 
 app = Flask(__name__)
+app.secret_key = "SECRET"
+loginManager = flask_login.LoginManager()
+loginManager.init_app(app)
 #Get config parts for the api
 host = getConfPart("db","host")
 user = getConfPart("db","user")
@@ -67,3 +73,55 @@ def createTodo(listName):
     completed = int(request.args.get('completed',0))
     api.saveListItem(listId,content,completed)
     return redirect(url_for('showTodos',listName=listName))
+
+"""
+User login and other user functionality
+"""
+@loginManager.user_loader
+def userLoader(userId):
+    if api.isUser(userId):
+        return User(userId)
+    else:
+        return None
+
+@loginManager.request_loader
+def requestloader(request):
+    userId = request.form.get('userId')
+    if api.isUser(userId):
+        return None
+    else:
+        return User(userId)
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        userName = request.values.get('userName')
+        password = request.values.get('password')
+        print("user:{}".format(userName))
+        #Validate user against password
+        if api.validateUser(userName,password):
+            #User is valid
+            userId = api.getUserId(userName)
+            flask_login.login_user(User(userId))
+            return redirect(url_for('secret'))
+        else:
+            #User isn't valid, return to login page
+            return render_template('login.html')
+    elif request.method == 'GET':
+        return render_template('login.html')
+
+@app.route('/logout')
+@flask_login.login_required
+def logout():
+    flask_login.logout_user()
+    return "Logged out"
+
+#Testing purposes only
+@app.route('/secret')
+@flask_login.login_required
+def secret():
+    return "Logged in as: {}".format(flask_login.current_user.get_id())
+
+@loginManager.unauthorized_handler
+def unoauthorized():
+    return "Piss off"

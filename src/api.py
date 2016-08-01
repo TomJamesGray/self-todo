@@ -106,7 +106,7 @@ class Api(object):
     def validateUser(self,userName,password):
         #Get user by userName and compare hashed+salted PWs
         self.cursor.execute("SELECT password FROM users WHERE userName=?",
-                (userName))
+                (userName,))
         __actualPassword = self.cursor.fetchall()[0][0].encode('utf8')
         
         if bcrypt.hashpw(password.encode('utf8'),__actualPassword) ==  __actualPassword:
@@ -114,4 +114,16 @@ class Api(object):
             return True
         else:
             return False
+    
+    def getUserId(self,userName):
+        self.cursor.execute("SELECT userId FROM users WHERE userName=?",
+                (userName,))
+        return self.cursor.fetchall()[0][0]
 
+    def isUser(self,userId):
+        self.cursor.execute("SELECT userId FROM users where userId=?",
+                (userId,))
+        if not self.cursor.fetchall() == []:
+            return True
+        else:
+            return False

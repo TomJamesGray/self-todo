@@ -12,4 +12,5 @@ before_install:
 install:
   - pip install pytest
   - pip install oursql3
+  - pip install bcrypt
 script: py.test

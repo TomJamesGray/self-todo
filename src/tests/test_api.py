@@ -6,11 +6,13 @@ listId = None
 todoId = None
 userId = None
 todoContents = "todo content"
+userName = "travis"
+userPassword = "password"
 @pytest.fixture(scope="module")
 def makeList(request):
-    global listName,listId,todoContents,userId
+    global listName,listId,todoContents,userId,userName,userPassword
     client = Client()
-    client.api.createUser("travis","password")
+    client.api.createUser(userName,userPassword)
     userId = client.api.getUserId("travis")
     client.api.createList("pyTestList",userId)
     listId = client.api.getListId("pyTestList")
@@ -39,3 +41,11 @@ def testGetTodoId(makeList):
         assert True
     else:
         assert False
+
+def testUserIsValid(makeList):
+    global userId
+    assert makeList.isUser(userId)
+
+def testValidateUser(makeList):
+    global userId,userName,userPassword
+    assert makeList.validateUser(userName,userPassword)

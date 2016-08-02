@@ -110,7 +110,11 @@ class Api(object):
         #Get user by userName and compare hashed+salted PWs
         self.cursor.execute("SELECT password FROM users WHERE userName=?",
                 (userName,))
-        __actualPassword = self.cursor.fetchall()[0][0].encode('utf8')
+        data = self.cursor.fetchall()
+        if data == []:
+            return False
+
+        __actualPassword = data[0][0].encode('utf8')
         
         if bcrypt.hashpw(password.encode('utf8'),__actualPassword) ==  __actualPassword:
             #User password is valid

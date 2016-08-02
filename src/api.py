@@ -125,7 +125,10 @@ class Api(object):
     def getUserId(self,userName):
         self.cursor.execute("SELECT userId FROM users WHERE userName=?",
                 (userName,))
-        return self.cursor.fetchall()[0][0]
+        data = self.cursor.fetchall()
+        if data == []:
+            return False
+        return data[0][0]
 
     def isUser(self,userId):
         self.cursor.execute("SELECT userId FROM users where userId=?",

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import flask_login
 from functools import wraps
-from flask import g,Flask,render_template,request,redirect,url_for
+from flask import g,Flask,render_template,request,redirect,url_for,session
 from src.api import Api
 from src.helpers import getConfPart
 from src.user import User
@@ -126,6 +126,7 @@ def login():
 @flask_login.login_required
 def logout():
     flask_login.logout_user()
+    session.clear()
     return redirect(url_for('login'))
 
 @app.route('/settings')

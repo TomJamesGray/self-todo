@@ -113,8 +113,7 @@ def login():
         if api.validateUser(userName,password):
             #User is valid
             userId = api.getUserId(userName)
-            userRole = api.getUserRole(userId)
-            flask_login.login_user(User(userId,userRole),remember=True)
+            flask_login.login_user(User(userId),remember=True)
             return redirect(url_for('index'))
         else:
             #User isn't valid, return to login page GET
@@ -134,7 +133,19 @@ def logout():
 def settings():
     role = api.getUserRole(flask_login.current_user.get_id())
     if role == 'user':
-        return "Settings page for normal user"
+        return render_template('settings/user.html')
+    elif role == 'admin':
+        return render_template('settings/admin.html')
     else:
         #TODO implement other user roles
-        return "You probably shouldn't be seeing this"
+        return "Other roles"
+
+@app.route('/users/create',methods=['POST'])
+@flask_login.login_required
+def createUser():
+    userName = request.values.get('userName')
+    password = request.values.get('password')
+    role = request.values.get('role')
+    api.createUser(userName,password,role)
+
+    return redirect(url_for('settings'))

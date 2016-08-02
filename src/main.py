@@ -147,6 +147,10 @@ def createUser():
     userName = request.values.get('userName')
     password = request.values.get('password')
     role = request.values.get('role')
+    #Verify is userName already exists by making
+    #sure getUserId returns []
+    if not api.getUserId(userName) == []:
+        #TODO Return to previous page with error
+        return "User already taken"
     api.createUser(userName,password,role)
-
     return redirect(url_for('settings'))

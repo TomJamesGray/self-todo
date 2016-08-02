@@ -19,9 +19,8 @@ class Api(object):
         for column in columns:
             if column not in columnNames:
                 raise ValueError("Column name desired provided is not in column names")
-
-        self.cursor.execute("SELECT {}  FROM todoLists WHERE userId=? ".format(','.join(columns)),
-            (userId,))
+        stmnt = "SELECT {} FROM todoLists WHERE userId=?".format(','.join(columns))
+        self.cursor.execute(stmnt,(userId,))
         return self.cursor.fetchall()
 
     def saveListItem(self,listId,content,completed):

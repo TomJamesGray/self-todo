@@ -2,6 +2,12 @@
 {% block title %}Login - {% endblock %}
 {% block header %}Login{% endblock %}
 {% block content %}
+{% if request.args.get('error') is not none %}
+<div class="error">
+	<p class="text-center">{{ request.args.get('error') }}</p>
+</div>
+<hr/>
+{% endif %}
 <form action="{{ url_for('login') }}" method="POST" class="loginForm">
 	<div class="form-group">
 		<label for="userName">User name</label>

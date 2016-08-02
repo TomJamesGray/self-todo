@@ -116,8 +116,9 @@ def login():
             flask_login.login_user(User(userId),remember=True)
             return redirect(url_for('index'))
         else:
-            #User isn't valid, return to login page
-            return render_template('login.html')
+            #User isn't valid, return to login page GET
+            error = "User name and password combination invalid"
+            return redirect(url_for('login',error=error))
     elif request.method == 'GET':
         return render_template('login.html')
 

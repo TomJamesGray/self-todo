@@ -49,3 +49,10 @@ def testUserIsValid(makeList):
 def testValidateUser(makeList):
     global userId,userName,userPassword
     assert makeList.validateUser(userName,userPassword)
+
+def testValidateUnkwownUser(makeList):
+    assert not makeList.validateUser('notAUser','pass')
+
+def testValidateUserWrongPassword(makeList):
+    global userName
+    assert not makeList.validateUser(userName,'a')

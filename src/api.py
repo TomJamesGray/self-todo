@@ -141,3 +141,12 @@ class Api(object):
     def deleteUser(self,userId):
         self.cursor.execute("DELETE FROM users WHERE userId=?",(userId,))
         return True
+
+    def getUserRole(self,userId):
+        self.cursor.execute("SELECT role FROM users WHERE userId=?",(userId,))
+        data = self.cursor.fetchall()
+        if data == []:
+            #No user found
+            return False
+        else:
+            return data[0][0]

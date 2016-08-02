@@ -60,7 +60,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `userId` int(11) NOT NULL AUTO_INCREMENT,
-  `userName` varchar(50) NOT NULL,
+  `userName` varchar(50) NOT NULL UNIQUE,
   `password` text NOT NULL,
   `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `role` varchar(10) DEFAULT 'user',

@@ -20,7 +20,7 @@ class Api(object):
             if column not in columnNames:
                 raise ValueError("Column name desired provided is not in column names")
 
-        self.cursor.execute("SELECT {}  FROM todoLists WHERE userId=?".format(','.join(columns)),
+        self.cursor.execute("SELECT {}  FROM todoLists WHERE userId=? ".format(','.join(columns)),
             (userId,))
         return self.cursor.fetchall()
 

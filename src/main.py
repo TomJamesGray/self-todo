@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = "SECRET"
 loginManager = flask_login.LoginManager()
 loginManager.init_app(app)
+loginManager.session_protection = "strong"
 #Get config parts for the api
 host = getConfPart("db","host")
 user = getConfPart("db","user")

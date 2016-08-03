@@ -18,6 +18,9 @@ label{
 	font-weight:400;
 	font-size:16px;
 }
+.loginForm label{
+	display:block;
+}
 header{
 	background-color:#2C90DE;
 	padding:10px;
@@ -33,6 +36,15 @@ header{
 }
 header > h1 > a{
 	color:#000 !important;
+}
+.error{
+	background-color:#F64B2F;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.error p{
+	margin:0;
+	padding:0;
 }
 /*Media queries*/
 /*Small devices, smaller than 768px wide*/

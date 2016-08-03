@@ -1,4 +1,5 @@
 import oursql
+import bcrypt
 class Api(object):
     def __init__(self,host,user,password,dbName):
         self.conn = oursql.connect(host=host,user=user,
@@ -6,19 +7,20 @@ class Api(object):
         self.cursor = self.conn.cursor()
 
     
-    def createList(self,listName):
-        self.cursor.execute("INSERT INTO todoLists SET listName=?",(listName,))
+    def createList(self,listName,userId):
+        self.cursor.execute("INSERT INTO todoLists (listName,userId) \
+                VALUES (?,?)",(listName,userId))
     
     #Retrieve all columns for lists from db
     #Columns should provided in a list
-    def getLists(self,columns=['listName']):
+    def getLists(self,userId,columns=['listName']):
         columnNames = ['listId','listName','creationDate']
 
         for column in columns:
             if column not in columnNames:
                 raise ValueError("Column name desired provided is not in column names")
-
-        self.cursor.execute("SELECT {}  FROM todoLists".format(','.join(columns)))
+        stmnt = "SELECT {} FROM todoLists WHERE userId=?".format(','.join(columns))
+        self.cursor.execute(stmnt,(userId,))
         return self.cursor.fetchall()
 
     def saveListItem(self,listId,content,completed):
@@ -28,7 +30,8 @@ class Api(object):
     #Get list id by list name
     #returned as int 
     def getListId(self,listName):
-        self.cursor.execute("SELECT listId FROM todoLists WHERE listName=?",(listName,))
+        self.cursor.execute("SELECT listId FROM todoLists WHERE listName=?",
+            (listName,))
         listId = self.cursor.fetchall()
         if listId != None and len(listId) == 1:
             return listId[0][0]
@@ -95,3 +98,54 @@ class Api(object):
         stmnt = "UPDATE todos SET listId=?,content=?,completed=? WHERE todoId=?"
         self.cursor.execute(stmnt,todoData[0] + (todoId2,))
         self.cursor.execute(stmnt,todoData[1] + (todoId1,))
+
+    def createUser(self,userName,password,role="user"):
+        #Hash the password with a salt
+        hashedPw = bcrypt.hashpw(password.encode('utf8'),bcrypt.gensalt())
+        self.cursor.execute("INSERT INTO users (userName,password,role) \
+            VALUES (?,?,?)",(userName,hashedPw,role))
+
+    def validateUser(self,userName,password):
+        #Get user by userName and compare hashed+salted PWs
+        self.cursor.execute("SELECT password FROM users WHERE userName=?",
+                (userName,))
+        data = self.cursor.fetchall()
+        if data == []:
+            return False
+
+        __actualPassword = data[0][0].encode('utf8')
+        
+        if bcrypt.hashpw(password.encode('utf8'),__actualPassword) ==  __actualPassword:
+            #User password is valid
+            return True
+        else:
+            return False
+    
+    def getUserId(self,userName):
+        self.cursor.execute("SELECT userId FROM users WHERE userName=?",
+                (userName,))
+        data = self.cursor.fetchall()
+        if data == []:
+            return False
+        return data[0][0]
+
+    def isUser(self,userId):
+        self.cursor.execute("SELECT userId FROM users where userId=?",
+                (userId,))
+        if not self.cursor.fetchall() == []:
+            return True
+        else:
+            return False
+
+    def deleteUser(self,userId):
+        self.cursor.execute("DELETE FROM users WHERE userId=?",(userId,))
+        return True
+
+    def getUserRole(self,userId):
+        self.cursor.execute("SELECT role FROM users WHERE userId=?",(userId,))
+        data = self.cursor.fetchall()
+        if data == []:
+            #No user found
+            return False
+        else:
+            return data[0][0]

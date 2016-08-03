@@ -1,6 +1,6 @@
 -- MySQL dump 10.16  Distrib 10.1.14-MariaDB, for Linux (armv7l)
 --
--- Host: localhost    Database: self_todo
+-- Host: localhost    Database: self_todo_user_login_branch
 -- ------------------------------------------------------
 -- Server version	10.1.14-MariaDB
 
@@ -24,10 +24,13 @@ DROP TABLE IF EXISTS `todoLists`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `todoLists` (
   `listId` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
   `listName` varchar(50) NOT NULL,
   `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`listId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`listId`),
+  KEY `fk_userId` (`userId`),
+  CONSTRAINT `fk_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,8 +47,25 @@ CREATE TABLE `todos` (
   `completed` int(1) DEFAULT NULL,
   PRIMARY KEY (`todoId`),
   KEY `listId` (`listId`),
-  CONSTRAINT `todos_ibfk_1` FOREIGN KEY (`listId`) REFERENCES `todoLists` (`listId`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `todos_ibfk_1` FOREIGN KEY (`listId`) REFERENCES `todoLists` (`listId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(50) NOT NULL UNIQUE,
+  `password` text NOT NULL,
+  `creationDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `role` varchar(10) DEFAULT 'user',
+  PRIMARY KEY (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +77,4 @@ CREATE TABLE `todos` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-28 12:32:25
+-- Dump completed on 2016-08-01 15:24:28

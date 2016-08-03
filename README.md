@@ -1,4 +1,4 @@
-# self-todo
+# self-todo [![Build Status](https://travis-ci.org/TomJamesGray/self-todo.svg?branch=user-login)](https://travis-ci.org/TomJamesGray/self-todo)
 ## Todo lists
 ![Todo lists](todoLists.png)
 ## Todos

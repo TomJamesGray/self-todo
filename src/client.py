@@ -2,6 +2,7 @@ import oursql
 import os
 import logging
 import sys
+import getpass
 from src.api import Api
 from src.helpers import getConfPart
 class Client():
@@ -11,12 +12,13 @@ class Client():
         __password = getConfPart("db","password")
         __dbName = getConfPart("db","dbName")
         self.api = Api(__host,__user,__password,__dbName)
+        self.userId = None
         
     def createListPrompt(self):
         listName = input("create > ")
         #Check if that list name is unique
         try:
-            namesOfExistingLists = self.api.getLists("listName")
+            namesOfExistingLists = self.api.getLists(self.userId,["listName"])
         except ValueError as e:
             print(e)
             return False
@@ -24,7 +26,7 @@ class Client():
             print("List name already exists")
             return False
 
-        self.api.createList(listName)    
+        self.api.createList(listName,self.userId)    
 
     def addListItemPrompt(self):
         listToAddTo = input("add - list name > ")
@@ -37,7 +39,7 @@ class Client():
     #Print all the lists in the db
     def listListsPrompt(self):
         try:
-            listNames = self.api.getLists('listName')
+            listNames = self.api.getLists(self.userId,["listName"])
         except ValueError as e:
             print(e)
             return False
@@ -96,23 +98,30 @@ class Client():
     def runIt(self):
         client = Client()
         choices = {
-            'add':client.addListItemPrompt,
-            'create':client.createListPrompt,
-            'lists':client.listListsPrompt,
-            'todos':client.listItemsPrompt,
-            'rmt':client.removeListItemPrompt,
-            'rml':client.removeListPrompt,
-            'mark':client.markListItemPrompt,
-            'help':client.showHelp
+            'add':self.addListItemPrompt,
+            'create':self.createListPrompt,
+            'lists':self.listListsPrompt,
+            'todos':self.listItemsPrompt,
+            'rmt':self.removeListItemPrompt,
+            'rml':self.removeListPrompt,
+            'mark':self.markListItemPrompt,
+            'help':self.showHelp
         }
-        while True:
-            try:
-                decision = input("> ")
+        #Log user in
+        userName = input("User name > ")
+        password = getpass.getpass("Password > ")
+        if self.api.validateUser(self.userName,password):
+            self.userId = self.api.getUserId(self.userName)
+            while True:
                 try:
-                    func = choices.get(decision,self.runIt)
-                    func()
-                except ValueError as e:
-                    print("Value error occued {}".format(e))
-            except KeyboardInterrupt:
-                    sys.exit(1)
+                    decision = input("> ")
+                    try:
+                        func = choices.get(decision,self.runIt)
+                        func()
+                    except ValueError as e:
+                        print("Value error occued {}".format(e))
+                except KeyboardInterrupt:
+                        sys.exit(1)
+        else:
+            print("Authentication failed")
 

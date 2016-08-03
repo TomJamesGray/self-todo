@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import flask_login
 from functools import wraps
-from flask import g,Flask,render_template,request,redirect,url_for,session
+from flask import Flask,render_template,request,redirect,url_for,session
 from src.api import Api
 from src.helpers import getConfPart
 from src.user import User

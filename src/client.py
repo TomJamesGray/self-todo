@@ -104,6 +104,7 @@ class Client():
             'rmt':self.removeListItemPrompt,
             'rml':self.removeListPrompt,
             'mark':self.markListItemPrompt,
+            'exit':sys.exit,
             'help':self.showHelp
         }
         #If a userId is already set then use the same user

@@ -17,5 +17,5 @@ install:
   - pip install requests
   - pip install flask
 env:
-  - FLASK_RUN=src/main.py
+  - FLASK_APP=src/main.py
 script: py.test

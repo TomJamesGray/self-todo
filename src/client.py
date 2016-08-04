@@ -107,21 +107,24 @@ class Client():
             'mark':self.markListItemPrompt,
             'help':self.showHelp
         }
-        #Log user in
-        userName = input("User name > ")
-        password = getpass.getpass("Password > ")
-        if self.api.validateUser(self.userName,password):
-            self.userId = self.api.getUserId(self.userName)
-            while True:
+        #If a userId is already set then use the same user
+        if self.userId == None:
+            userName = input("User name > ")
+            password = getpass.getpass("Password > ")
+            if self.api.validateUser(userName,password):
+                self.userId = self.api.getUserId(userName)
+            else:
+                print("Authentication Failed")
+        while True:
+            try:
+                decision = input("> ")
                 try:
-                    decision = input("> ")
-                    try:
-                        func = choices.get(decision,self.runIt)
-                        func()
-                    except ValueError as e:
-                        print("Value error occued {}".format(e))
-                except KeyboardInterrupt:
-                        sys.exit(1)
+                    func = choices.get(decision,self.runIt)
+                    func()
+                except ValueError as e:
+                    print("Value error occued {}".format(e))
+            except KeyboardInterrupt:
+                    sys.exit(1)
         else:
             print("Authentication failed")
 

@@ -124,7 +124,6 @@ def login():
     if request.method == 'POST':
         userName = request.values.get('userName')
         password = request.values.get('password')
-        print("user:{}".format(userName))
         #Validate user against password
         if api.validateUser(userName,password):
             #User is valid
@@ -160,7 +159,6 @@ def settings():
 @app.route('/users/create',methods=['POST'])
 @flask_login.login_required
 @adminRequired
-#TODO Must be admin role, write custom decorator 
 def createUser():
     userName = request.values.get('userName')
     password = request.values.get('password')

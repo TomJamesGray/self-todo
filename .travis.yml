@@ -16,6 +16,7 @@ install:
   - pip install bcrypt
   - pip install requests
   - pip install flask
+  - pip install flask_login
 env:
   - FLASK_APP=src/main.py
 script: py.test

@@ -93,7 +93,7 @@ def adminRequired(f):
             return f(*args,**kwargs)
         else:
             #User is not admin so return to login page
-            return unoauthorized() 
+            return unauthorized() 
 
     return wrapper
 
@@ -113,7 +113,10 @@ def requestloader(request):
         return None
 
 @loginManager.unauthorized_handler
-def unoauthorized():
+#Yes this is the American spelling, I would spell
+#it *properly* but I feel like I should at least make
+#an attempt at consistency
+def unauthorized():
     return redirect(url_for('login'))
 
 @app.route('/login',methods=['GET','POST'])

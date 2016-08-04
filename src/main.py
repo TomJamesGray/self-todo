@@ -85,6 +85,18 @@ def createTodo(listName):
 """
 User login and other user functionality
 """
+def adminRequired(f):
+    @wraps(f)
+    def wrapper(*args,**kwargs):
+        print("Testing if user is admin")
+        if api.getUserRole(flask_login.current_user.get_id()) == 'admin':
+            return f(*args,**kwargs)
+        else:
+            #User is not admin so return to login page
+            return unoauthorized() 
+
+    return wrapper
+
 @loginManager.user_loader
 def userLoader(userId):
     if api.isUser(userId):
@@ -144,6 +156,7 @@ def settings():
 
 @app.route('/users/create',methods=['POST'])
 @flask_login.login_required
+@adminRequired
 #TODO Must be admin role, write custom decorator 
 def createUser():
     userName = request.values.get('userName')

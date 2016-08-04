@@ -96,7 +96,6 @@ class Client():
         f.close()
 
     def runIt(self):
-        client = Client()
         choices = {
             'add':self.addListItemPrompt,
             'create':self.createListPrompt,
@@ -125,6 +124,4 @@ class Client():
                     print("Value error occued {}".format(e))
             except KeyboardInterrupt:
                     sys.exit(1)
-        else:
-            print("Authentication failed")
 

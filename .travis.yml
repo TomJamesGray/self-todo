@@ -6,11 +6,16 @@ services:
   - mysql
 addons:
   mariadb: '10.0'
-before_install:
+before_script:
   - mysql -e "CREATE DATABASE IF NOT EXISTS self_todo" -u root
   - mysql -u root self_todo < dump.sql
+  - flask run
 install:
   - pip install pytest
   - pip install oursql3
   - pip install bcrypt
+  - pip install requests
+  - pip install flask
+env:
+  - FLASK_RUN=src/main.py
 script: py.test

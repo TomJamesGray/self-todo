@@ -9,7 +9,7 @@ addons:
 before_script:
   - mysql -e "CREATE DATABASE IF NOT EXISTS self_todo" -u root
   - mysql -u root self_todo < dump.sql
-  - flask run
+  - nohup flask run > /dev/null &
 install:
   - pip install pytest
   - pip install oursql3
